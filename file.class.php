@@ -49,10 +49,10 @@ class File extends FileHelper implements Iterator {
 
 	/**
 	 * 
-	 * @param type $file_or_directory
-	 * @param type $mode
-	 * @param type $use_include_path
-	 * @param type $context
+	 * @param string $file_or_directory
+	 * @param string $mode
+	 * @param boolean $use_include_path
+	 * @param context $context
 	 * @throws FileException
 	 */
 	public function __construct($file_or_directory, $mode = 'wb', $use_include_path = False, $context = False) {
@@ -346,7 +346,7 @@ class FileHelper {
 	/**
 	 * 
 	 * @param File|string $file_or_directory
-	 * @return octal
+	 * @return integer
 	 */
 	public static function _getUmask($file_or_directory = Null) { // http://us3.php.net/manual/en/function.umask.php
 		return umask();
@@ -364,7 +364,7 @@ class FileHelper {
 	/**
 	 * 
 	 * @param File|string $file_or_directory
-	 * @return octal
+	 * @return integer
 	 */
 	public static function _getPermissions($file_or_directory) { // http://us3.php.net/manual/en/function.fileperms.php
 		$file_or_directory = self::_getFileOrDirectoryName($file_or_directory);
@@ -377,7 +377,7 @@ class FileHelper {
 	 * @param octal $mode
 	 * @return boolean
 	 */
-	public static function _setMode($file_or_directory, $mode) { // http://us3.php.net/manual/en/function.chmod.php
+	public static function _setPermissions($file_or_directory, $mode) { // http://us3.php.net/manual/en/function.chmod.php
 		$file_or_directory = self::_getFileOrDirectoryName($file_or_directory);
 		return chmod($file_or_directory, $mode);
 	}
@@ -628,7 +628,7 @@ class FileHelper {
 	 * @param File|string $file_or_directory
 	 * @return float
 	 */
-	public static function _getDiscFreeSpace($file_or_directory = '/') { // http://us3.php.net/manual/en/function.disk_free_space.php
+	public static function _getDiscSpaceFree($file_or_directory = '/') { // http://us3.php.net/manual/en/function.disk_free_space.php
 		return disk_free_space($file_or_directory);
 	}
 
@@ -637,7 +637,7 @@ class FileHelper {
 	 * @param File|string $file_or_directory
 	 * @return float
 	 */
-	public static function _getDiscTotalSpace($file_or_directory = '/') { // http://us3.php.net/manual/en/function.disk_total_space.php
+	public static function _getDiscSpaceTotal($file_or_directory = '/') { // http://us3.php.net/manual/en/function.disk_total_space.php
 		return disk_total_space($file_or_directory = '/');
 	}
 
@@ -646,8 +646,8 @@ class FileHelper {
 	 * @param File|string $file_or_directory
 	 * @return float
 	 */
-	public static function _getDiscUsedSpace($file_or_directory = '/') {
-		return self::_getDiscTotalSpace($file_or_directory) - self::_getDiscFreeSpace($file_or_directory);
+	public static function _getDiscSpaceUsed($file_or_directory = '/') {
+		return self::_getDiscSpaceTotal($file_or_directory) - self::_getDiscSpaceFree($file_or_directory);
 	}
 
 	/**
